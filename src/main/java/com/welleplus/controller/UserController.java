@@ -4,10 +4,15 @@ import com.welleplus.entity.User;
 import com.welleplus.result.Result;
 import com.welleplus.server.UserServer;
 import com.welleplus.utils.Md5Util;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -62,9 +67,11 @@ public class UserController {
      */
     @CrossOrigin
     @RequestMapping("findall")
-    public Result findAll(){
+    public Result findAll(int page){
         Result result = new Result();
-        List<User> users = userServer.findAll();
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(page,pageSize,new Sort(Sort.Direction.DESC,"careateTime"));
+        Page<User> users = userServer.findAll(pageable);
         result.setData(users);
         result.setStatus(true);
         return result;

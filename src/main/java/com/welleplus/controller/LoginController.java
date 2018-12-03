@@ -53,6 +53,12 @@ public class LoginController {
         }
 
         password = Md5Util.md5String(password);
+        User loginUser = userServer.findByUserName(userName);
+        if(loginUser==null){
+            result.setStatus(false);
+            result.setMessage("用户不存在！");
+            return result;
+        }
         User user = userServer.findByUserNameAndPassword(userName,password);
         if(user!=null){
             HttpSession session = request.getSession();

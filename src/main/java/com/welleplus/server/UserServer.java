@@ -1,10 +1,11 @@
 package com.welleplus.server;
 
 import com.welleplus.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public interface UserServer extends JpaRepository<User,String> {
@@ -26,7 +27,7 @@ public interface UserServer extends JpaRepository<User,String> {
      * 查询所有用户信息
      * @return
      */
-    List<User> findAll();
+    Page<User> findAll(Pageable pageable);
 
     /**
      * 根据用户名查询用户信息
